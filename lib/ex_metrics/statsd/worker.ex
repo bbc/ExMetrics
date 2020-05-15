@@ -29,5 +29,6 @@ defmodule ExMetrics.Statsd.Worker do
   defp set_up_statix do
     Application.put_env(:statix, :host, Config.statsd_host())
     Application.put_env(:statix, :port, Config.statsd_port())
+    Application.put_env(:statix, :pool_size, Config.pool_size())
   end
 end
