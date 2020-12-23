@@ -1,13 +1,9 @@
 defmodule ExMetrics do
-  alias ExMetrics.DefinedMetrics
-
   @stat_types [:timing, :increment, :decrement, :gauge, :set, :histogram]
 
   @stat_types
   |> Enum.each(fn stat_type ->
     def unquote(stat_type)(metric, value \\ 1, opts \\ []) do
-      DefinedMetrics.log_if_undefined_metric(metric)
-
       GenServer.cast(
         ExMetrics.Statsd.Worker,
         {unquote(stat_type), [metric, Kernel.trunc(value), opts]}
