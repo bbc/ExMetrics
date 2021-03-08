@@ -13,11 +13,11 @@ defmodule ExMetrics do
 
   defmacro timeframe(key, do: yield) do
     quote do
-      before_time = System.monotonic_time(:microsecond)
+      before_time = System.monotonic_time(:millisecond)
       result = unquote(yield)
-      diff = (System.monotonic_time(:microsecond) - before_time) |> abs
+      diff = (System.monotonic_time(:millisecond) - before_time) |> abs
 
-      ExMetrics.timing(unquote(key), diff / 1_000)
+      ExMetrics.timing(unquote(key), diff)
       result
     end
   end
