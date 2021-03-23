@@ -26,6 +26,18 @@ defmodule ExMetrics.Statsd.Worker do
     {:noreply, connection}
   end
 
+  def handle_cast(_request, connection) do
+    {:noreply, connection}
+  end
+
+  def handle_call(_request, _from, connection) do
+    {:reply, nil, connection}
+  end
+
+  def handle_info(_request, connection) do
+    {:noreply, connection}
+  end
+
   defp set_up_statix do
     Application.put_env(:statix, :host, Config.statsd_host())
     Application.put_env(:statix, :port, Config.statsd_port())
