@@ -5,13 +5,11 @@ defmodule ExMetrics.Plug.PageMetrics do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    before_time = :os.timestamp()
+    before_time = System.monotonic_time(:millisecond)
     ExMetrics.increment("web.request.count")
 
     register_before_send(conn, fn conn ->
-      after_time = :os.timestamp()
-      diff = :timer.now_diff(after_time, before_time)
-      timing = diff / 1_000
+      timing = (System.monotonic_time(:millisecond) - before_time) |> abs
 
       ExMetrics.increment("web.response.status.#{conn.status}")
       ExMetrics.timing("web.response.timing.#{conn.status}", timing)
