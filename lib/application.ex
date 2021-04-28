@@ -4,7 +4,7 @@ defmodule ExMetrics.Application do
   def start(_type, args) do
     children = children(args)
 
-    opts = [strategy: :one_for_one, name: ExMetrics.Supervisor]
+    opts = [strategy: :one_for_one, name: ExMetrics.Supervisor, max_restarts: 10_000]
     Supervisor.start_link(children, opts)
   end
 
